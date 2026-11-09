@@ -1,0 +1,44 @@
+@model IEnumerable<HeroesFluent.Models.Heroe>
+@using Microsoft.AspNetCore.Authorization
+@using HeroesFluent.Seguridad
+@inject IAuthorizationService AuthorizationService
+
+@{
+    ViewData["Title"] = "Héroes";
+    var puedeCrear = (await AuthorizationService.AuthorizeAsync(User, null, Permisos.CrearHeroes)).Succeeded;
+    var puedeEditar = (await AuthorizationService.AuthorizeAsync(User, null, Permisos.EditarHeroes)).Succeeded;
+    var puedeEliminar = (await AuthorizationService.AuthorizeAsync(User, null, Permisos.EliminarHeroes)).Succeeded;
+}
+<h1>Héroes</h1>
+@if (puedeCrear)
+{
+    <p><a asp-action="Create" class="btn btn-primary">Crear héroe</a></p>
+}
+<table class="table table-striped">
+    <thead>
+        <tr><th>Nombre</th><th>Alias</th><th>NivelPoder</th><th>FechaRegistro</th><th>Equipo</th><th>Acciones</th></tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@Html.DisplayFor(modelItem => item.Nombre)</td>
+            <td>@Html.DisplayFor(modelItem => item.Alias)</td>
+            <td>@Html.DisplayFor(modelItem => item.NivelPoder)</td>
+            <td>@Html.DisplayFor(modelItem => item.FechaRegistro)</td>
+            <td>@(item.Equipo?.Nombre ?? "Sin equipo")</td>
+            <td>
+                <a asp-action="Details" asp-route-id="@item.Id">Detalles</a>
+                @if (puedeEditar)
+                {
+                    <a asp-action="Edit" asp-route-id="@item.Id">Editar</a>
+                }
+                @if (puedeEliminar)
+                {
+                    <a asp-action="Delete" asp-route-id="@item.Id">Eliminar</a>
+                }
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

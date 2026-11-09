@@ -1,0 +1,19 @@
+@model HeroesFluent.Models.Heroe
+@using Microsoft.AspNetCore.Authorization
+@using HeroesFluent.Seguridad
+@inject IAuthorizationService AuthorizationService
+
+@{ ViewData["Title"] = "Detalles Héroe"; }
+<h1>Detalles Héroe</h1>
+<dl class="row">
+<dt class="col-sm-3">Nombre</dt><dd class="col-sm-9">@Html.DisplayFor(model => model.Nombre)</dd>
+<dt class="col-sm-3">Alias</dt><dd class="col-sm-9">@Html.DisplayFor(model => model.Alias)</dd>
+<dt class="col-sm-3">NivelPoder</dt><dd class="col-sm-9">@Html.DisplayFor(model => model.NivelPoder)</dd>
+<dt class="col-sm-3">FechaRegistro</dt><dd class="col-sm-9">@Html.DisplayFor(model => model.FechaRegistro)</dd>
+<dt class="col-sm-3">Equipo</dt><dd class="col-sm-9">@(Model.Equipo?.Nombre ?? "Sin equipo")</dd>
+</dl>
+@if ((await AuthorizationService.AuthorizeAsync(User, null, Permisos.EditarHeroes)).Succeeded)
+{
+    <a asp-action="Edit" asp-route-id="@Model.Id">Editar</a>
+}
+<a asp-action="Index">Volver al listado</a>

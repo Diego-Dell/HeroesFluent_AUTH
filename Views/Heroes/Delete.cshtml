@@ -1,0 +1,13 @@
+@model HeroesFluent.Models.Heroe
+
+@{ ViewData["Title"] = "Delete Heroe"; }
+<h1>Eliminar Heroe</h1>
+<h3>¿Seguro que deseas eliminar este registro?</h3>
+<dl class="row">
+<dt class="col-sm-3">Nombre</dt><dd class="col-sm-9">@Html.DisplayFor(model => model.Nombre)</dd>
+<dt class="col-sm-3">Alias</dt><dd class="col-sm-9">@Html.DisplayFor(model => model.Alias)</dd>
+<dt class="col-sm-3">NivelPoder</dt><dd class="col-sm-9">@Html.DisplayFor(model => model.NivelPoder)</dd>
+<dt class="col-sm-3">FechaRegistro</dt><dd class="col-sm-9">@Html.DisplayFor(model => model.FechaRegistro)</dd>
+<dt class="col-sm-3">Equipo</dt><dd class="col-sm-9">@(Model.Equipo?.Nombre ?? "Sin equipo")</dd>
+</dl>
+<form asp-action="Delete" method="post"><input type="hidden" asp-for="Id" /><button type="submit" class="btn btn-danger">Eliminar</button> | <a asp-action="Index">Volver al listado</a></form>

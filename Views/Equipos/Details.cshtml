@@ -1,0 +1,10 @@
+@model HeroesFluent.Models.Equipo
+
+@{ ViewData["Title"] = "Details Equipo"; }
+<h1>Detalles Equipo</h1>
+<dl class="row">
+<dt class="col-sm-3">Nombre</dt><dd class="col-sm-9">@Html.DisplayFor(model => model.Nombre)</dd>
+<dt class="col-sm-3">FechaFundacion</dt><dd class="col-sm-9">@Html.DisplayFor(model => model.FechaFundacion)</dd>
+<dt class="col-sm-3">Presupuesto</dt><dd class="col-sm-9">@Html.DisplayFor(model => model.Presupuesto)</dd>
+</dl>
+<a asp-action="Edit" asp-route-id="@Model.Id">Editar</a> | <a asp-action="Index">Volver al listado</a>
